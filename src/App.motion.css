@@ -1,0 +1,74 @@
+/* Motion is progressively enhanced: content is hidden only while the observer is active. */
+.hero .eyebrow { animation: fade-rise .55s both; }
+.hero h1 span:first-child { animation: fade-rise .68s .1s both; }
+.hero h1 span:nth-child(2) { animation: fade-rise .68s .2s both; }
+.hero-supporting-headline { animation: fade-rise .68s .78s both; }
+.hero-tagline { animation: fade-rise .68s .91s both; }
+.hero-actions .button:first-child { animation: fade-rise .58s 1.04s both; }
+.hero-actions .button:nth-child(2) { animation: fade-rise .58s 1.16s both; }
+.hero-portrait-frame { animation: portrait-in .85s .18s both; }
+.hero-portrait-frame::before { animation: portrait-glow-drift 22s ease-in-out infinite alternate; }
+.hero-portrait-frame .portrait-image-frame { animation: portrait-mask-in .9s .18s both, portrait-float 8s 1.15s ease-in-out infinite; }
+.hero::before { animation: hero-light-drift 24s ease-in-out infinite alternate; }
+.floating-social-link { animation: social-link-in .58s cubic-bezier(.22,.7,.2,1) both; animation-delay: calc(.2s + var(--social-index, 0) * 90ms); }
+
+@keyframes fade-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes portrait-in {
+  from { opacity: 0; transform: translateY(10px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes portrait-mask-in {
+  from { clip-path: inset(0 0 100% 0 round 18px); }
+  to { clip-path: inset(0 0 0 0 round 18px); }
+}
+@keyframes portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@keyframes portrait-glow-drift {
+  from { transform: translate3d(-3%, 1%, 0) scale(.96); opacity: .68; }
+  to { transform: translate3d(3%, -2%, 0) scale(1.04); opacity: 1; }
+}
+@keyframes hero-light-drift {
+  from { transform: translate3d(-1%, -1%, 0) scale(1); }
+  to { transform: translate3d(1.5%, 2%, 0) scale(1.025); }
+}
+@keyframes social-link-in {
+  from { opacity: 0; translate: 24px 0; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .72s cubic-bezier(.22,.7,.2,1), transform .72s cubic-bezier(.22,.7,.2,1);
+}
+.motion-ready [data-reveal].is-visible { opacity: 1; transform: none; }
+.motion-ready .project-card[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .72s cubic-bezier(.22,.7,.2,1), transform .72s cubic-bezier(.22,.7,.2,1);
+  transition-delay: calc(var(--card-index, 0) * 140ms);
+}
+.motion-ready .project-card[data-reveal].is-visible { opacity: 1; }
+.motion-ready .project-card[data-reveal].is-visible:not(:hover) { transform: translateY(0); }
+.motion-ready .project-card[data-reveal].is-visible.is-revealed { transition-delay: 0s; }
+.project-card:hover { transform: translateY(-3px); }
+.motion-ready .project-card[data-reveal].is-visible:hover { transform: translateY(-3px); }
+.project-cover-photo { transition: transform .55s cubic-bezier(.22,.7,.2,1); }
+.project-card:hover .project-cover-photo { transform: scale(1.025); }
+.project-card-links a svg,.button svg,.header-cta svg { transition: transform .22s ease; }
+.project-card-links a:hover svg,.button:hover svg,.header-cta:hover svg { transform: translate(2px,-2px); }
+.primary-nav a,.button,.header-cta,.header-resume,.theme-toggle,.nav-toggle,.project-card-links a,.project-filters button,.footer-socials a { transition: transform .2s ease,opacity .2s ease; }
+.skill-panel[data-reveal] { transition-delay: calc(var(--skill-index,0) * 75ms); }
+@media (prefers-reduced-motion: reduce) {
+  .hero .eyebrow,.hero h1 span,.hero-supporting-headline,.hero-tagline,.hero-actions .button,.hero-portrait-frame,.hero-portrait-frame::before,.hero-portrait-frame .portrait-image-frame,.hero::before { animation: none; }
+  .floating-social-link { animation: none; }
+  .motion-ready [data-reveal],.motion-ready [data-reveal].is-visible { opacity: 1; transform: none; transition: none; }
+  .project-card[data-reveal].is-visible,.project-card[data-reveal].is-visible:hover,.project-card:hover { transform: none; }
+  .project-card:hover .project-cover-photo { transform: none; }
+  .availability-dot { animation: none; }
+}
